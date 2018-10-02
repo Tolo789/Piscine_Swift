@@ -50,8 +50,11 @@ class Deck : NSObject {
     }
 
     func draw() -> Card? {
-        let drawnCard = cards.removeFirst()
-        outs.append(drawnCard)
+        var drawnCard: Card?
+        if (cards.count > 0) {
+            drawnCard = cards.removeFirst()
+            outs.append(drawnCard!)
+        }
 
         return drawnCard
     }
