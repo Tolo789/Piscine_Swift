@@ -1,20 +1,11 @@
 import Foundation
 
 class Deck : NSObject {
-    static let allSpades = generateAllCardsOf(type: Color.Spade)
-    static let allDiamonds = generateAllCardsOf(type: Color.Diamond)
-    static let allHearts = generateAllCardsOf(type: Color.Heart)
-    static let allClubs = generateAllCardsOf(type: Color.Club)
+    static let allSpades = Value.allValues.map { Card(c: Color.Spade, v: $0) }
+    static let allDiamonds = Value.allValues.map { Card(c: Color.Diamond, v: $0) }
+    static let allHearts = Value.allValues.map { Card(c: Color.Heart, v: $0) }
+    static let allClubs = Value.allValues.map { Card(c: Color.Club, v: $0) }
     static let allCards = allSpades + allDiamonds + allHearts + allClubs
-
-    static func generateAllCardsOf(type: Color) -> [Card] {
-        var tmpList = [Card]()
-        for value in Value.allValues {
-            tmpList.append(Card(c: type, v: value))
-        }
-
-        return tmpList
-    }
 
     var cards = allCards
     var discards = [Card]()
