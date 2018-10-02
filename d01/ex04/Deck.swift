@@ -43,11 +43,11 @@ class Deck : NSObject {
             for card in cards {
                 str += card.description + "\n"
             }
-            str = "- Outs:\n"
+            str += "- Outs:\n"
             for card in outs {
                 str += card.description + "\n"
             }
-            str = "- Discards:\n"
+            str += "- Discards:\n"
             for card in discards {
                 str += card.description + "\n"
             }
@@ -66,9 +66,10 @@ class Deck : NSObject {
     }
 
     func fold(c: Card) {
-        if let found = find(outs, c) {
-            // outs.removeAll(where: {$0 == c} );
-            discards.append(found)
+        if let found = outs.enumerated().first(where: {$0.element == c}) {
+            // do something with foo.offset and foo.element
+            outs.remove(at: found.offset);
+            discards.append(found.element)
         }
     }
 }
@@ -77,7 +78,7 @@ extension Array {
     mutating func shuffle() {
         let arraySize = UInt32(self.count)
         for i in 0 ..< self.count {
-            swapAt(i, Int(arc4random_uniform(arraySize)))
+            self.swapAt(i, Int(arc4random_uniform(arraySize)))
         }
     }
 }

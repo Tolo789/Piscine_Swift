@@ -21,7 +21,10 @@ extension Array {
     mutating func shuffle() {
         let arraySize = UInt32(self.count)
         for i in 0 ..< self.count {
-            swapAt(i, Int(arc4random_uniform(arraySize)))
+            let tmpVal = self[i]
+            let swapIndex = Int(arc4random_uniform(arraySize))
+            self[i] = self[swapIndex]
+            self[swapIndex] = tmpVal
         }
     }
 }
