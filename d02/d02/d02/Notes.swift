@@ -9,9 +9,9 @@
 import Foundation
 
 struct Notes {
-    static var allNotes: [(name: String, cause: String)] = [
-        ("Joffrey", "Killed by smiling Arya"),
-        ("Cersei", "Killed by angry Arya"),
-        ("Ilyn Payne", "Killed by cold-blooded Arya")
+    static var allNotes: [(name: String, date: String, cause: String)] = [
+        ("Joffreyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy", "03.10.2018 13:46", "Killed by smiling Arya"),
+        ("Cersei", "03.10.2018 13:46", "Killed by angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry y angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry angry\n.\n.\n.\nArya"),
+        ("Ilyn Payne", "03.10.2018 13:46", "")
     ]
 }

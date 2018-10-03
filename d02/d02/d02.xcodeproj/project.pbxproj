@@ -14,6 +14,7 @@
 		7B7644F32163DEA300B9A1C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B7644F12163DEA300B9A1C9 /* LaunchScreen.storyboard */; };
 		7B7644FB2163E09200B9A1C9 /* Notes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7644FA2163E09200B9A1C9 /* Notes.swift */; };
 		7B7645012163E8FE00B9A1C9 /* NewNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B7645002163E8FE00B9A1C9 /* NewNoteViewController.swift */; };
+		7B9D7F252164CA8000FF1205 /* DeathNoteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9D7F242164CA8000FF1205 /* DeathNoteTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		7B7644F42163DEA300B9A1C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7B7644FA2163E09200B9A1C9 /* Notes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notes.swift; sourceTree = "<group>"; };
 		7B7645002163E8FE00B9A1C9 /* NewNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewNoteViewController.swift; sourceTree = "<group>"; };
+		7B9D7F242164CA8000FF1205 /* DeathNoteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeathNoteTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				7B7644EF2163DEA300B9A1C9 /* Assets.xcassets */,
 				7B7644F12163DEA300B9A1C9 /* LaunchScreen.storyboard */,
 				7B7644F42163DEA300B9A1C9 /* Info.plist */,
+				7B9D7F242164CA8000FF1205 /* DeathNoteTableViewCell.swift */,
 			);
 			path = d02;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 				7B7645012163E8FE00B9A1C9 /* NewNoteViewController.swift in Sources */,
 				7B7644E92163DEA300B9A1C9 /* AppDelegate.swift in Sources */,
 				7B7644FB2163E09200B9A1C9 /* Notes.swift in Sources */,
+				7B9D7F252164CA8000FF1205 /* DeathNoteTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

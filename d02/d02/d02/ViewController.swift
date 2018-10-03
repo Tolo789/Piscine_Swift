@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     @IBAction func myUnwind(unwindSegue: UIStoryboardSegue) {
         print("Coming back")
+        tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,10 +29,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell")
-        cell?.textLabel?.text = Notes.allNotes[indexPath.row].name
-        cell?.detailTextLabel?.text = Notes.allNotes[indexPath.row].cause
-        return cell!
+        let cell = tableView.dequeueReusableCell(withIdentifier: "noteCell") as! DeathNoteTableViewCell
+        cell.note = Notes.allNotes[indexPath.row]
+        return cell
     }
 
 }
