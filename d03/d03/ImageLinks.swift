@@ -19,6 +19,8 @@ struct ImageLinks {
         ("https://www.wallpaperup.com/uploads/wallpapers/2016/06/24/991808/9ab236cccae5470451c20329ca43ec6b.jpg", nil),
         ("https://www.wallpaperup.com/uploads/wallpapers/2014/11/17/519385/82b58deee6b45bfbcf86c42837e8e812.jpg", nil),
         ("https://www.wallpaperup.com/uploads/wallpapers/2016/07/15/996188/295cf1f048d073fcd948e15ebf056e07.jpg", nil),
-        ("https://www.wallpaperup.com/uploads/wallpapers/2014/10/22/489754/4b93674b5876be28de713ce75fb0e3bd.jpg", nil)
+        ("https://www.wallpaperup.com/uploads/wallpapers/2014/10/22/489754/4b93674b5876be28de713ce75fb0e3bd.jpg", nil),
+        ("troll", nil),
+        ("https://www.wallpaperup.com/uploads/trollFile", nil)
     ]
 }
