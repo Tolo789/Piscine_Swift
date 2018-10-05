@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol APITwitterDelegate {
+protocol APITwitterDelegate : NSObjectProtocol {
     func treatTweets(tweets: [Tweet])
     func handleError(error: NSError)
 }

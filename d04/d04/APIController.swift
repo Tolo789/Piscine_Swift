@@ -19,33 +19,64 @@ class APIController {
     }
     
     func requestLastTweets(keyword: String) {
-        let CUSTOMER_KEY = "ks34Pe0ncn4ztQSX2HVUMeORR"
-        let CUSTOMER_SECRET = "ykt4F3i0HdNmU5MGxNWXURH1lTmtXwxqWilJBTymTxhSoJVqly"
-        let BEARER = ((CUSTOMER_KEY + ":" + CUSTOMER_SECRET).data(using: String.Encoding.utf8))!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        
-        let url = NSURL(string: "hhtps:://api.twitter.com/oauth2/token")
+        print("Fetching tweets with: \(keyword)")
+        let escapedkeyword = (keyword.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed))!
+        let query = "?q=" + escapedkeyword + "&count=100" + "&lang=fr" + "&result_type=recent"
+        print("Query:", query)
+        let url = NSURL(string: "https://api.twitter.com/1.1/search/tweets.json" + query)
         let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "POST"
-        request.setValue("Basic " + BEARER, forHTTPHeaderField: "Authorization")
+        request.httpMethod = "GET"
+        request.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         request.setValue("application/x-www-form-urlencoded;charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.httpBody = "grant_type=client_credentials".data(using: String.Encoding.utf8)
+        
         let task = URLSession.shared.dataTask(with: request as URLRequest) {
-            (data, error, response) in
-            print(response as Any)
+            (data, response, error) in
+            //            print("Response\n", response as Any)
             if let err = error {
-                print(err)
+                self.delegate?.handleError(error: err as NSError)
             }
             else if let d = data {
                 do {
                     if let dic : NSDictionary = try JSONSerialization.jsonObject(with: d, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                        print(dic)
+//                        print("Print\n", dic)
+                        if let statuses : [NSDictionary] = dic.value(forKey: "statuses") as? [NSDictionary] {
+//                            print("Status\n", statuses)
+                            var tweets = [Tweet]()
+                            for status in statuses {
+                                if let user : NSDictionary = status.value(forKey: "user") as? NSDictionary,
+                                    let userName = user.value(forKey: "name") as? String,
+                                    let text = status.value(forKey: "text") as? String,
+                                    let createDate = status.value(forKey: "created_at") as? String {
+                                    // Date is in UTC format, lets make it more readable
+                                    let formattedDate = self.UTCToLocal(UTCDateString: createDate)
+                                    
+                                    // Tweet creation
+                                    tweets.append(Tweet(description: formattedDate, name: userName, text: text))
+                                }
+                            }
+                            self.delegate?.treatTweets(tweets: tweets)
+                        }
+                        else {
+                            print("No statuses[] in dictionary")
+                        }
                     }
                 }
                 catch (let err) {
-                    print(err)
+                    self.delegate?.handleError(error: err as NSError)
                 }
             }
         }
         task.resume()
+    }
+    
+    private func UTCToLocal(UTCDateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM dd HH:mm:ss ZZZZZ yyyy" //Input Format
+        dateFormatter.timeZone = NSTimeZone(name: "UTC") as TimeZone!
+        let UTCDate = dateFormatter.date(from: UTCDateString)
+        dateFormatter.dateFormat = "dd/MM/yyyy HH:mm" // Output Format
+        dateFormatter.timeZone = TimeZone.current
+        let UTCToCurrentFormat = dateFormatter.string(from: UTCDate!)
+        return UTCToCurrentFormat
     }
 }
