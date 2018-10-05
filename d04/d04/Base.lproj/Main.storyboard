@@ -18,8 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Ecole 42" borderStyle="roundedRect" placeholder="Ecole 42" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JNk-16-3gP">
+                                <rect key="frame" x="0.0" y="64" width="375" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="QGl-n6-aZd">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                                <rect key="frame" x="0.0" y="94" width="375" height="573"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationLevel="1" indentationWidth="10" reuseIdentifier="tweetCell" rowHeight="150" id="z3B-d2-Rnh" customClass="TweetTableViewCell" customModule="d04" customModuleProvider="target">
@@ -90,15 +96,19 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="QGl-n6-aZd" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="04D-u1-DiA"/>
-                            <constraint firstItem="QGl-n6-aZd" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="RXb-aR-Z34"/>
-                            <constraint firstItem="QGl-n6-aZd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="n9E-Fi-8ff"/>
-                            <constraint firstItem="QGl-n6-aZd" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="opU-aZ-DBZ"/>
+                            <constraint firstItem="QGl-n6-aZd" firstAttribute="top" secondItem="JNk-16-3gP" secondAttribute="bottom" id="NwB-in-Izc"/>
+                            <constraint firstItem="JNk-16-3gP" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="OVi-5i-3KS"/>
+                            <constraint firstItem="JNk-16-3gP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Tn1-J0-rKE"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="JNk-16-3gP" secondAttribute="trailing" id="gpV-bo-2Yp"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QGl-n6-aZd" secondAttribute="trailing" id="hNY-RR-UtU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QGl-n6-aZd" secondAttribute="bottom" id="suY-HS-Urn"/>
+                            <constraint firstItem="QGl-n6-aZd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="z8I-r9-gWh"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="Tweets Search" id="7Te-jw-xis"/>
                     <connections>
+                        <outlet property="searchText" destination="JNk-16-3gP" id="TBq-6l-xTs"/>
                         <outlet property="tableView" destination="QGl-n6-aZd" id="Ez3-XO-AeW"/>
                     </connections>
                 </viewController>

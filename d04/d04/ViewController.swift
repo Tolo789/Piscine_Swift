@@ -8,16 +8,18 @@
 
 import UIKit
 
-class ViewController: UIViewController, APITwitterDelegate, UITableViewDataSource, UITableViewDelegate {
+class ViewController: UIViewController, APITwitterDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     var token: String = ""
     var apiController: APIController?
     var tweets = [Tweet]()
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchText: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchText.delegate = self
         getToken()
     }
     
@@ -100,6 +102,14 @@ class ViewController: UIViewController, APITwitterDelegate, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: "tweetCell") as! TweetTableViewCell
         cell.tweet = tweets[indexPath.row]
         return cell
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let text = searchText.text {
+            askForTweets(with: text)
+        }
+        searchText.resignFirstResponder()
+        return true
     }
 }
 
