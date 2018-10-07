@@ -12,19 +12,28 @@ import Foundation
 class APIController {
     private static let clientId = "3bcad0dc38836cb4f099bfabb4dbc9e5f55cc525167903f3554285603962138e"
     private static let secretId = "2b7fcf10452667988f80f3abea331a9b5538458249054ddc3ed84a11a72c9502"
-    static let authLink = "https://api.intra.42.fr/oauth/authorize?client_id=3bcad0dc38836cb4f099bfabb4dbc9e5f55cc525167903f3554285603962138e&redirect_uri=fr42Rush00Scheme%3A%2F%2Fcallback&response_type=code"
+    static let authLink = "https://api.intra.42.fr/oauth/authorize?client_id=3bcad0dc38836cb4f099bfabb4dbc9e5f55cc525167903f3554285603962138e&redirect_uri=fr42Rush00Scheme%3A%2F%2Fcallback&response_type=code&scope=public%20forum"
     private static var code: String? = nil
     private static var uri = "fr42Rush00Scheme%3A%2F%2Fcallback"
     
-    private static var accessToken = "dce1354431cf99d2298b32ccbefbf0433bf25634a13e7377169fc9d42b66e2ae"
+    private static var accessToken = "c6bbc7076e33d914be77b06f63e11be6c7b52cc975512b6f3c231cc8b6f70213"
     private static var refreshToken = "cd43b9b6c6a1f7d3ba39f61dc1a3715c61a3e02eaf5b1822c2f112e297a6b6b7"
     
     static var currentView : UIViewController? = nil
     
     static let pageSize = 30
     
+    static var userId = 16894 // cmutti = 16894, nsayah =
+    
     static func getToken(action: @escaping (Bool) -> Void) {
         if canSkipAuth() {
+            if userId < 0 {
+                getUserId {
+                    success in
+                    action(success)
+                }
+                return
+            }
             action(true)
             return
         }
@@ -51,6 +60,12 @@ class APIController {
                             refreshToken = refreshTok
                             success = true
                         }
+                        else {
+                            print("No access token found")
+                        }
+                    }
+                    else {
+                        print("Cannot cast to NSDictionary")
                     }
                 }
                 catch (let err) {
@@ -58,15 +73,47 @@ class APIController {
                 }
             }
             
-            action(success)
+            if success {
+                getUserId {_ in
+                    action(success)
+                }
+            }
+            else {
+                action(success)
+            }
         }
         task.resume()
+    }
+    
+    static func getUserId(action: @escaping (Bool) -> Void) {
+        let url = "https://api.intra.42.fr/v2/me"
+        makeApiGetRequest(urlString: url, finishAction: {success, _, _ in action(success) }) {
+            data in
+            var success = false
+            do {
+                let dico: NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+//                print("UserInfo\n", dico)
+                if let id = dico.value(forKey: "id") as? Int {
+                    print("UserId: \(id)")
+                    success = true
+                    self.userId = id
+                }
+                else {
+                    print("No UserId")
+                }
+            }
+            catch (let err) {
+                print("Catched Error\n", err)
+            }
+            
+            return (success, [Any]())
+        }
     }
     
     static func getTopics(page: Int, action: @escaping (Bool, [Any], Int) -> Void) {
         
         let url = "https://api.intra.42.fr/v2/topics?page=\(page)"
-        makeApiRequest(urlString: url, finishAction: action) {
+        makeApiGetRequest(urlString: url, finishAction: action) {
             data in
             var success = false
             var topicArray = [Topic]()
@@ -100,7 +147,7 @@ class APIController {
     static func getTopicMessages(id: Int, action: @escaping (Bool, [Any], Int) -> Void) {
         
         let url = "https://api.intra.42.fr/v2/topics/\(id)/messages"
-        makeApiRequest(urlString: url, finishAction: action) {
+        makeApiGetRequest(urlString: url, finishAction: action) {
             data in
             var success = false
             var myArray = [TopicMessage]()
@@ -112,7 +159,7 @@ class APIController {
                 }
                 else {
                     let array: [NSDictionary] = try JSONSerialization.jsonObject(with: data, options:[]) as! [NSDictionary]
-    ////                print("Array test : \(array.description)\n")
+//                    print("Array test : \(array.description)\n")
                     success = true
                     for elem in array {
                         if  let id = elem.value(forKey: "id") as? Int,
@@ -144,7 +191,7 @@ class APIController {
                                 print("\tNo replies")
                             }
                             print("")
-                            myArray.append(TopicMessage(id: id, userName: login, createDate: date, message: content, replies: replies))
+                            myArray.append(TopicMessage(id: id, userName: login, createDate: self.UTCToLocal(UTCDateString: date), message: content, replies: replies))
                         }
                         else {
                             print("Some errors in message..\n")
@@ -161,13 +208,12 @@ class APIController {
         }
     }
 
-    private static func makeApiRequest(method: String = "GET", urlString: String, finishAction: @escaping (Bool, [Any], Int) -> Void,
+    private static func makeApiGetRequest(urlString: String, finishAction: @escaping (Bool, [Any], Int) -> Void,
                                        treatDataAction: @escaping (Data) -> (Bool, [Any])) {
-        
-        print("\nRequested: \(urlString)")
+//        print("\nRequested: \(urlString)")
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = method
+        request.httpMethod = "GET"
         request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         request.setValue("application/x-www-form-urlencoded;charset=UTF-8", forHTTPHeaderField: "Content-Type")
         
@@ -175,7 +221,7 @@ class APIController {
             (data, response, error) in
             var success = false
             var myArray = [Any]()
-            var totalElem: Int = 0
+            var totalElem: Int = -1
 //            print("Response\n", response as Any)
             if let err = error {
                 print("Error in URL response\n", err)
@@ -183,33 +229,117 @@ class APIController {
             else if let httpResponse = response as? HTTPURLResponse,
                 let headers = httpResponse.allHeaderFields as? NSDictionary,
                 httpResponse.statusCode == 200 {
-                print("\tPositive httpResponse")
-                    if let pageSize = headers.value(forKey: "X-Per-Page") as? String,
-                        let link = headers.value(forKey: "Link") as? String,
-                        let index = link.range(of: ">; rel=\"last\"")?.lowerBound {
+//                print("\tPositive httpResponse")
+                
+                // Sometimes httpResponse doesnt have a pagination
+                if let pageSize = headers.value(forKey: "X-Per-Page") as? String,
+                    let link = headers.value(forKey: "Link") as? String,
+                    let index = link.range(of: ">; rel=\"last\"")?.lowerBound {
 //                        print("Headers\n", headers)
-                        
-                        // Get total elems from Header
-                        var pageNbr = String (link[..<index])
-                        var index = link.range(of: "page=")?.upperBound
-                        while let idx = index {
-                            pageNbr = String (pageNbr[idx...])
-                            index = pageNbr.range(of: "page=")?.upperBound
-                        }
-                        totalElem = Int(pageSize)! * Int(pageNbr)!
-//                        print("Total Elems: \(totalElem)")
-                        
-                        // Treat data
-                        if let d = data {
-                            (success, myArray) = treatDataAction(d)
-                        }
+                    
+                    // Get total elems from Header
+                    var pageNbr = String (link[..<index])
+                    var index = link.range(of: "page=")?.upperBound
+                    while let idx = index {
+                        pageNbr = String (pageNbr[idx...])
+                        index = pageNbr.range(of: "page=")?.upperBound
                     }
+                    totalElem = Int(pageSize)! * Int(pageNbr)!
+//                        print("Total Elems: \(totalElem)")
+                }
+                
+                // Treat data
+                if let d = data {
+                    (success, myArray) = treatDataAction(d)
+                    if success, totalElem < 0 {
+                        totalElem = myArray.count
+                    }
+                }
+                else {
+                    print("No data")
+                }
             }
             else {
                 print("Error in Headers")
             }
             
             finishAction(success, myArray, totalElem)
+        }
+        task.resume()
+    }
+    
+    static func addMessage(to topicId: Int, message: String, action: @escaping (Bool, Any?) -> Void) {
+        
+        let url = "https://api.intra.42.fr/v2/topics/\(topicId)/messages"
+        let json = "{\"message\": {\"author_id\": \"\(userId)\",\"content\": \"\(message)\"}}"
+        makeApiPostRequest(urlString: url, json: json, finishAction: action) {
+            data in
+            let postedData = TopicMessage(id: 0, userName: "test", createDate: "", message: "", replies: [MessageReply]())
+            let success = true
+            
+            do {
+                if let dic : NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    print("Full Post\n", dic)
+                    if  let id = dic.value(forKey: "id") as? Int,
+                        let content = dic.value(forKey: "content") as? String,
+                        let date = dic.value(forKey: "created_at") as? String,
+                        let auth = dic.value(forKey: "author") as? NSDictionary,
+                        let login = auth.value(forKey: "login") as? String {
+                        postedData.userName = login
+                        postedData.createDate = UTCToLocal(UTCDateString: date)
+                        postedData.message = content
+                        postedData.id = id
+                    }
+                }
+                else {
+                    print("Cannot cast to NSDictionary")
+                }
+            }
+            catch (let err) {
+                print("Catched Error\n", err)
+            }
+
+            
+            return (success, postedData)
+        }
+    }
+    
+    private static func makeApiPostRequest(urlString: String, json: String, finishAction: @escaping (Bool, Any?) -> Void,
+                                          treatDataAction: @escaping (Data) -> (Bool, Any?)) {
+        
+//        print("\nPOST Requested:\n\t\(urlString)\n\t\(json)")
+        let url = NSURL(string: urlString)
+        let request = NSMutableURLRequest(url: url! as URL)
+        request.httpMethod = "POST"
+        request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = json.data(using: String.Encoding.utf8, allowLossyConversion: false)
+        
+        let task = URLSession.shared.dataTask(with: request as URLRequest) {
+            (data, response, error) in
+            var success = false
+            var postedData : Any? = nil
+            //            print("Response\n", response as Any)
+            if let err = error {
+                print("Error in URL response\n", err)
+            }
+            else if let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 201 {
+//                print("\tPositive httpResponse")
+                
+                // Treat data
+                if let d = data {
+                    (success, postedData) = treatDataAction(d)
+                }
+                else {
+                    print("No data")
+                }
+            }
+            else {
+                print("Error in Headers")
+            }
+            
+            finishAction(success, postedData)
         }
         task.resume()
     }

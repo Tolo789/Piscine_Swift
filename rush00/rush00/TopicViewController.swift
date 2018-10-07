@@ -8,16 +8,18 @@
 
 import UIKit
 
-class TopicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class TopicViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     var topicId: Int = 0
     var topicMessages = [TopicMessage]()
     
     @IBOutlet weak var messagesTable: UITableView!
+    @IBOutlet weak var textField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // TODO: fetch messages
+        textField.delegate = self
+        
+// TODO: fetch messages
 //        var replies = [MessageReply]()
 //        topicMessages.append(TopicMessage(id: 0, userName: "Me", createDate: "yesterday", message: "Noov", replies: replies))
 
@@ -54,6 +56,44 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
                 self.displayAlert(message: "Cannot retrieve topic messages")
             }
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+//            print(keyboardHeight)
+            self.view.frame.origin.y -= keyboardHeight
+        }
+    }
+
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+            let keyboardHeight = keyboardSize.height
+//            print(keyboardHeight)
+            self.view.frame.origin.y += keyboardHeight
+        }
+    }
+
+    //Hide keyboard click btn return
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        if let message = textField.text, !message.isEmpty {
+            textField.text = ""
+            APIController.addMessage(to: topicId, message: message, action: {
+                success, newData in
+                if success, let newMessage = newData as? TopicMessage {
+                    self.topicMessages.append(newMessage)                    
+                    DispatchQueue.main.async {
+                        self.messagesTable.reloadData()
+                    }
+                }
+                return
+            })
+        }
+        return true
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

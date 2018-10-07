@@ -21,5 +21,4 @@ class ReplyTableViewCell: UITableViewCell {
             replyLabel?.text = reply?.reply
         }
     }
-
 }

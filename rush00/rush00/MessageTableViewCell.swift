@@ -22,7 +22,7 @@ class MessageTableViewCell: UITableViewCell, UITableViewDataSource, UITableViewD
     
     // TODO: add action to add reply
     @IBOutlet weak var replyText: UITextField!
-    
+
     var message : TopicMessage? {
         didSet {
             if let m = message {

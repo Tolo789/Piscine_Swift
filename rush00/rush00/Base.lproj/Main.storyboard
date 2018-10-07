@@ -166,7 +166,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <tableView clipsSubviews="YES" tag="42" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wdx-mg-2G5" userLabel="Replies">
+                                                <tableView clipsSubviews="YES" tag="42" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wdx-mg-2G5" userLabel="Replies">
                                                     <rect key="frame" x="20" y="78" width="335" height="263.5"/>
                                                     <color key="backgroundColor" red="1" green="0.25043588604001477" blue="0.27713856566698747" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <prototypes>
@@ -280,6 +280,7 @@
                     </view>
                     <connections>
                         <outlet property="messagesTable" destination="OSn-Vx-7eq" id="g2L-bi-YjV"/>
+                        <outlet property="textField" destination="pYE-Vq-ybU" id="Yha-qr-PdQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dlJ-14-Kpm" userLabel="First Responder" sceneMemberID="firstResponder"/>
