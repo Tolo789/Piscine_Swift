@@ -19,30 +19,6 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
         super.viewDidLoad()
         textField.delegate = self
         
-// TODO: fetch messages
-//        var replies = [MessageReply]()
-//        topicMessages.append(TopicMessage(id: 0, userName: "Me", createDate: "yesterday", message: "Noov", replies: replies))
-
-//        replies = [MessageReply]()
-//        replies.append(MessageReply(userName: "Test", createDate: "Dunno", reply: "."))
-//        replies.append(MessageReply(userName: "Test", createDate: "Dunno", reply: "."))
-//        topicMessages.append(TopicMessage(id: 0, userName: "Me2", createDate: "yesterday", message: "Noob", replies: replies))
-//
-//        replies = [MessageReply]()
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "It's me.."))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        replies.append(MessageReply(userName: "Reply", createDate: "Dunno", reply: "..\n\n\n\n MARIO !!"))
-//        topicMessages.append(TopicMessage(id: 0, userName: "Me3", createDate: "yesterday", message: "n00b", replies: replies))
-//
-//        replies = [MessageReply]()
-//        topicMessages.append(TopicMessage(id: 0, userName: "Me4", createDate: "yesterday", message: "Noob!", replies: replies))
-//
-//        messagesTable.reloadData()
-        
         APIController.currentView = self
         APIController.getTopicMessages(id: topicId) {
             success, data, totalElems in
@@ -51,31 +27,42 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
                 DispatchQueue.main.async {
                     self.messagesTable.reloadData()
                 }
-            }
-            else {
+            } else {
                 self.displayAlert(message: "Cannot retrieve topic messages")
             }
         }
         
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
-    }
-    
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-//            print(keyboardHeight)
-            self.view.frame.origin.y -= keyboardHeight
-        }
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name:NSNotification.Name.UIKeyboardWillShow, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
 
-    @objc func keyboardWillHide(notification: NSNotification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-            let keyboardHeight = keyboardSize.height
-//            print(keyboardHeight)
-            self.view.frame.origin.y += keyboardHeight
-        }
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        self.view.endEditing(true)
     }
+    
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        print("ok ")
+//    }
+    
+//    @objc func keyboardWillShow(notification: NSNotification) {
+//        print("***** keyboardWillShow *****")
+//        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            let keyboardHeight = keyboardSize.height
+//            self.view.frame.origin.y -= keyboardHeight
+//
+//            //scroll bottom page
+//            let scrollPoint = CGPoint(x: 0, y: self.messagesTable.contentSize.height - self.messagesTable.frame.size.height)
+//            self.messagesTable.setContentOffset(scrollPoint, animated: false)
+//        }
+//    }
+//
+//    @objc func keyboardWillHide(notification: NSNotification) {
+//        print("***** keyboardWillHide *****")
+//        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+//            let keyboardHeight = keyboardSize.height
+//            self.view.frame.origin.y += keyboardHeight
+//        }
+//    }
 
     //Hide keyboard click btn return
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -85,7 +72,7 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
             APIController.addMessage(to: topicId, message: message, action: {
                 success, newData in
                 if success, let newMessage = newData as? TopicMessage {
-                    self.topicMessages.append(newMessage)                    
+                    self.topicMessages.append(newMessage)
                     DispatchQueue.main.async {
                         self.messagesTable.reloadData()
                     }
@@ -106,6 +93,34 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row != 0, topicMessages[indexPath.row].userName == APIController.userLogin {
+            let alertController = UIAlertController(title: "Confirm", message: "Do you want to delete this message ?", preferredStyle: .alert)
+            
+            let closeAction = UIAlertAction(title: "Delete", style: .destructive) { (action:UIAlertAction) in
+                //                    print("Closing delete");
+                APIController.deleteMessage(messageId: self.topicMessages[indexPath.row].id) {
+                    success, _ in
+                    if success {
+                        DispatchQueue.main.async {
+                            self.topicMessages.remove(at: indexPath.row)
+                            self.messagesTable.reloadData()
+                        }
+                    }
+                }
+            }
+            alertController.addAction(closeAction)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction) in
+                //                    print("Closing cancel");
+            }
+            alertController.addAction(cancelAction)
+            
+            DispatchQueue.main.async {
+                self.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
+    
     func displayAlert(title: String = "Error", message: String) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -116,6 +131,16 @@ class TopicViewController: UIViewController, UITableViewDataSource, UITableViewD
             alertController.addAction(closeAction)
             
             self.present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func replyAdded(to messageId: Int, newReply: MessageReply) {
+        for (i, message) in topicMessages.enumerated() {
+            if message.id == messageId {
+                topicMessages[i].replies.append(newReply)
+                messagesTable.reloadData()
+                break
+            }
         }
     }
 }

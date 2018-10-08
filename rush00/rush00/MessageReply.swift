@@ -9,11 +9,13 @@
 import Foundation
 
 class MessageReply {
+    var id : Int
     var userName : String
     var createDate : String
     var reply : String
     
-    init(userName: String, createDate: String, reply: String) {
+    init(id: Int, userName: String, createDate: String, reply: String) {
+        self.id = id
         self.userName = userName
         self.createDate = createDate
         self.reply = reply

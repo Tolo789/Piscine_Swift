@@ -16,14 +16,16 @@ class APIController {
     private static var code: String? = nil
     private static var uri = "fr42Rush00Scheme%3A%2F%2Fcallback"
     
-    private static var accessToken = "c6bbc7076e33d914be77b06f63e11be6c7b52cc975512b6f3c231cc8b6f70213"
+
+    private static var accessToken = ""
     private static var refreshToken = "cd43b9b6c6a1f7d3ba39f61dc1a3715c61a3e02eaf5b1822c2f112e297a6b6b7"
     
-    static var currentView : UIViewController? = nil
+    static var currentView: UIViewController? = nil
     
     static let pageSize = 30
-    
-    static var userId = 16894 // cmutti = 16894, nsayah =
+
+    static var userId = -1  // cmutti = 16894, nsayah = 22266
+    static var userLogin = ""
     
     static func getToken(action: @escaping (Bool) -> Void) {
         if canSkipAuth() {
@@ -93,10 +95,11 @@ class APIController {
             do {
                 let dico: NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
 //                print("UserInfo\n", dico)
-                if let id = dico.value(forKey: "id") as? Int {
+                if let id = dico.value(forKey: "id") as? Int, let login = dico.value(forKey: "login") as? String {
                     print("UserId: \(id)")
                     success = true
                     self.userId = id
+                    self.userLogin = login
                 }
                 else {
                     print("No UserId")
@@ -105,7 +108,6 @@ class APIController {
             catch (let err) {
                 print("Catched Error\n", err)
             }
-            
             return (success, [Any]())
         }
     }
@@ -171,27 +173,29 @@ class APIController {
 //                            print("Login: \(login)\nContent: \(content)\nDate: \(date)")
                             // Fetch replies
                             var replies = [MessageReply]()
-                            if let repliesArray = elem.value(forKey: "replies") as? [NSDictionary] {
+                            if let repliesArray = elem.value(forKey: "replies") as? [NSDictionary], repliesArray.count > 0 {
                                 for reply in repliesArray {
                                     if  let r_content = reply.value(forKey: "content") as? String,
                                         let r_date = reply.value(forKey: "created_at") as? String,
+                                        let r_id = reply.value(forKey: "id") as? Int,
                                         let r_auth = reply.value(forKey: "author") as? NSDictionary,
                                         let r_login = r_auth.value(forKey: "login") as? String {
 //                                        print("\tLogin: \(r_login)\n\tContent: \(r_content)\n\tDate: \(r_date)")
-                                        replies.append(MessageReply(userName: r_login, createDate: self.UTCToLocal(UTCDateString: r_date), reply: r_content))
+                                        replies.append(MessageReply(id: r_id, userName: r_login, createDate: self.UTCToLocal(UTCDateString: r_date), reply: r_content))
                                     }
                                     else {
-                                        print("Some errors in reply..\n")
+                                        print("Some errors in reply..\n", repliesArray)
                                         success = false
                                         break
                                     }
                                 }
                             }
                             else {
-                                print("\tNo replies")
+//                                print("\tNo replies")
                             }
-                            print("")
-                            myArray.append(TopicMessage(id: id, userName: login, createDate: self.UTCToLocal(UTCDateString: date), message: content, replies: replies))
+                            if success {
+                                myArray.append(TopicMessage(id: id, userName: login, createDate: self.UTCToLocal(UTCDateString: date), message: content, replies: replies))
+                            }
                         }
                         else {
                             print("Some errors in message..\n")
@@ -272,23 +276,20 @@ class APIController {
         
         let url = "https://api.intra.42.fr/v2/topics/\(topicId)/messages"
         let json = "{\"message\": {\"author_id\": \"\(userId)\",\"content\": \"\(message)\"}}"
-        makeApiPostRequest(urlString: url, json: json, finishAction: action) {
+        makeApiRequest(httpMethod: "POST", urlString: url, json: json, finishAction: action) {
             data in
-            let postedData = TopicMessage(id: 0, userName: "test", createDate: "", message: "", replies: [MessageReply]())
+            var postedData: Any? = nil
             let success = true
             
             do {
                 if let dic : NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
-                    print("Full Post\n", dic)
+//                    print("Full Post\n", dic)
                     if  let id = dic.value(forKey: "id") as? Int,
                         let content = dic.value(forKey: "content") as? String,
                         let date = dic.value(forKey: "created_at") as? String,
                         let auth = dic.value(forKey: "author") as? NSDictionary,
                         let login = auth.value(forKey: "login") as? String {
-                        postedData.userName = login
-                        postedData.createDate = UTCToLocal(UTCDateString: date)
-                        postedData.message = content
-                        postedData.id = id
+                        postedData = TopicMessage(id: id, userName: login, createDate: UTCToLocal(UTCDateString: date), message: content, replies: [MessageReply]())
                     }
                 }
                 else {
@@ -298,19 +299,71 @@ class APIController {
             catch (let err) {
                 print("Catched Error\n", err)
             }
-
-            
             return (success, postedData)
         }
     }
     
-    private static func makeApiPostRequest(urlString: String, json: String, finishAction: @escaping (Bool, Any?) -> Void,
+    static func addReply(to messageId: Int, reply: String, action: @escaping (Bool, Any?) -> Void) {
+        let url = "https://api.intra.42.fr/v2/messages/\(messageId)/messages"
+        let json = "{\"message\": {\"author_id\": \"\(userId)\",\"content\": \"\(reply)\"}}"
+        makeApiRequest(httpMethod: "POST", urlString: url, json: json, finishAction: action) {
+            data in
+            var postedData: Any? = nil
+            let success = true
+            
+            do {
+                if let dic : NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    //                    print("Full Post\n", dic)
+                    if  let id = dic.value(forKey: "id") as? Int,
+                        let content = dic.value(forKey: "content") as? String,
+                        let date = dic.value(forKey: "created_at") as? String,
+                        let auth = dic.value(forKey: "author") as? NSDictionary,
+                        let login = auth.value(forKey: "login") as? String {
+                        postedData = MessageReply(id: id, userName: login, createDate: UTCToLocal(UTCDateString: date), reply: content)
+                    }
+                }
+                else {
+                    print("Cannot cast to NSDictionary")
+                }
+            }
+            catch (let err) {
+                print("Catched Error\n", err)
+            }
+            return (success, postedData)
+        }
+    }
+    
+    static func deleteMessage(messageId: Int, action: @escaping (Bool, Any?) -> Void) {
+        
+        let url = "https://api.intra.42.fr/v2/messages/\(messageId)"
+        let json = ""
+        makeApiRequest(httpMethod: "DELETE", urlString: url, json: json, finishAction: action) {
+            data in
+            let postedData: Any? = nil
+            let success = true
+            
+            do {
+                if let dic : NSDictionary = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? NSDictionary {
+                    print("Full Post\n", dic)
+                }
+                else {
+                    print("Cannot cast to NSDictionary")
+                }
+            }
+            catch (let err) {
+                print("Catched Error\n", err)
+            }
+            return (success, postedData)
+        }
+    }
+    
+    private static func makeApiRequest(httpMethod: String, urlString: String, json: String, finishAction: @escaping (Bool, Any?) -> Void,
                                           treatDataAction: @escaping (Data) -> (Bool, Any?)) {
         
 //        print("\nPOST Requested:\n\t\(urlString)\n\t\(json)")
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(url: url! as URL)
-        request.httpMethod = "POST"
+        request.httpMethod = httpMethod
         request.setValue("Bearer " + accessToken, forHTTPHeaderField: "Authorization")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = json.data(using: String.Encoding.utf8, allowLossyConversion: false)
@@ -324,7 +377,7 @@ class APIController {
                 print("Error in URL response\n", err)
             }
             else if let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 201 {
+                self.isRightStatusCode(requestType: httpMethod) == httpResponse.statusCode {
 //                print("\tPositive httpResponse")
                 
                 // Treat data
@@ -363,5 +416,18 @@ class APIController {
     
     static func canSkipAuth() -> Bool {
         return (accessToken != "")
+    }
+    
+    static func isRightStatusCode(requestType: String) -> Int {
+        switch requestType {
+        case "GET":
+            return 200
+        case "POST":
+            return 201
+        case "DELETE":
+            return 204
+        default:
+            return -1
+        }
     }
 }
