@@ -9,12 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
-    private let viewColors : [UIColor] = [.red, .blue, .green, .yellow, .gray, .cyan]
     
-    var dynamicAnimator = UIDynamicAnimator()
+    var dynamicAnimator: UIDynamicAnimator!
     let gravityBehavior = UIGravityBehavior()
     let collisionBehaviour = UICollisionBehavior()
     let elasticityBehavior = UIDynamicItemBehavior()
+    
+    var addedForms = [MyForm]()
+    var selectedFormIdx = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +33,107 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tapGesture(_ sender: UITapGestureRecognizer) {
-        let newView = UIView(frame: CGRect(x: sender.location(in: view).x - 50, y: sender.location(in: view).y - 50, width: 100, height: 100))
-        newView.backgroundColor = viewColors[Int(arc4random_uniform(UInt32(viewColors.count)))]
-        
-        if Int(arc4random_uniform(UInt32(2))) == 1 {
-             newView.layer.cornerRadius = newView.frame.size.width / 2
+        // Only spawn if click on an empty space
+        if addedForms.first(where: {$0.frame.contains(sender.location(in: view))}) == nil {
+            let newForm = MyForm(x: sender.location(in: view).x, y: sender.location(in: view).y)
+            
+            addedForms.append(newForm)
+            view.addSubview(newForm)
+            gravityBehavior.addItem(newForm)
+            collisionBehaviour.addItem(newForm)
+            elasticityBehavior.addItem(newForm)
+        }
+    }
+    
+    @IBAction func pinchGesture(_ sender: UIPinchGestureRecognizer) {
+        if sender.state == .began {
+            if let (idx, _) = addedForms.enumerated().first(where: {$0.element.frame.contains(sender.location(in: view))}) {
+                print("pinch start")
+                selectedFormIdx = idx
+                gravityBehavior.removeItem(addedForms[selectedFormIdx])
+//                                collisionBehaviour.removeItem(addedForms[selectedFormIdx])
+//                                elasticityBehavior.removeItem(addedForms[selectedFormIdx])
+                view.bringSubview(toFront: addedForms[selectedFormIdx])
+            }
         }
         
-        view.addSubview(newView)
-        gravityBehavior.addItem(newView)
-        collisionBehaviour.addItem(newView)
-        elasticityBehavior.addItem(newView)
+        if (sender.state == .began || sender.state == .changed) && selectedFormIdx >= 0 {
+            addedForms[selectedFormIdx].changeScale(scale: sender.scale)
+            dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+            sender.scale = 1
+        }
+        else {
+            if selectedFormIdx >= 0 {
+                gravityBehavior.addItem(addedForms[selectedFormIdx])
+//                                collisionBehaviour.addItem(addedForms[selectedFormIdx])
+//                                elasticityBehavior.addItem(addedForms[selectedFormIdx])
+                dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+            }
+            selectedFormIdx = -1
+            sender.scale = 1
+        }
+    }
+    
+    @IBAction func rotationGesture(_ sender: UIRotationGestureRecognizer) {
+        guard sender.view != nil else { return }
+        
+        if sender.state == .began {
+            if let (idx, _) = addedForms.enumerated().first(where: {$0.element.frame.contains(sender.location(in: view))}) {
+                print("rotation start")
+                selectedFormIdx = idx
+                gravityBehavior.removeItem(addedForms[selectedFormIdx])
+//                collisionBehaviour.removeItem(addedForms[selectedFormIdx])
+//                elasticityBehavior.removeItem(addedForms[selectedFormIdx])
+                view.bringSubview(toFront: addedForms[selectedFormIdx])
+                
+            }
+        }
+        
+        if (sender.state == .began || sender.state == .changed) && selectedFormIdx >= 0 {
+            addedForms[selectedFormIdx].changeRotation(by: sender.rotation)
+            dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+            sender.rotation = 0
+        }
+        else {
+            if selectedFormIdx >= 0 {
+                gravityBehavior.addItem(addedForms[selectedFormIdx])
+//                collisionBehaviour.addItem(addedForms[selectedFormIdx])
+//                elasticityBehavior.addItem(addedForms[selectedFormIdx])
+                dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+            }
+            selectedFormIdx = -1
+        }
+    }
+    
+    @IBAction func panGesture(_ sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            if let (idx, _) = addedForms.enumerated().first(where: {$0.element.frame.contains(sender.location(in: view))}) {
+                selectedFormIdx = idx
+                gravityBehavior.removeItem(addedForms[selectedFormIdx])
+                view.bringSubview(toFront: addedForms[selectedFormIdx])
+            }
+        case .changed:
+            if selectedFormIdx >= 0 {
+                addedForms[selectedFormIdx].changePosition(newX: sender.location(in: view).x, newY: sender.location(in: view).y)
+                dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+            }
+        case .ended:
+            if selectedFormIdx >= 0 {
+                addedForms[selectedFormIdx].changePosition(newX: sender.location(in: view).x, newY: sender.location(in: view).y)
+                dynamicAnimator.updateItem(usingCurrentState: addedForms[selectedFormIdx])
+                gravityBehavior.addItem(addedForms[selectedFormIdx])
+                selectedFormIdx = -1
+            }
+        case .failed, .cancelled:
+            print("Failed/Canceled")
+            if selectedFormIdx > 0 {
+                selectedFormIdx = -1
+                gravityBehavior.addItem(addedForms[selectedFormIdx])
+            }
+        case .possible:
+            print("possibile")
+        }
     }
 }
 
