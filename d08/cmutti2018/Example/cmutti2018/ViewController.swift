@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 import cmutti2018
 
+@available(iOS 10.0, *)
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
@@ -20,7 +21,7 @@ class ViewController: UIViewController {
         // Print saved articles
         print("--- Print saved articles -----------------------")
         for article in articleManager.getAllArticles() {
-            print(article.description)
+            print(article.description, "\n")
         }
         print("--- End print saved articles -----------------------\n")
         
@@ -28,44 +29,43 @@ class ViewController: UIViewController {
         print("--- Add mulitples articles --------------------")
         var newArticle: Article
         newArticle = articleManager.newArticle(title: "title", content: "toto", language: "en", image: nil)
-        print(newArticle.description)
+        print(newArticle.description, "\n")
         newArticle = articleManager.newArticle(title: "le Titre est 'toto'", content: "Mindblowing test ;)", language: "en", image: nil)
-        print(newArticle.description)
+        print(newArticle.description, "\n")
         newArticle = articleManager.newArticle(title: "French test", content: "Mot 'title' dans le contenu", language: "fr", image: nil)
-        print(newArticle.description)
+        print(newArticle.description, "\n")
         newArticle = articleManager.newArticle(title: "title3", content: "toto3", language: "en", image: nil)
-        print(newArticle.description)
+        print(newArticle.description, "\n")
         newArticle = articleManager.newArticle(title: "title4", content: "4", language: "en", image: nil)
-        print(newArticle.description)
+        print(newArticle.description, "\n")
         newArticle = articleManager.newArticle(title: "title5", content: "tot6", language: "fr", image: nil)
-        print(newArticle.description)
-        print("--- End add mulitples articles --------------------\n")
-        
+        print(newArticle.description, "\n")
+        print("--- End add mulitples articles --------------------\n")        
         
         print("--- Print all articles -----------------------")
         for article in articleManager.getAllArticles() {
-            print(article.description)
+            print(article.description, "\n")
         }
         print("--- End print all articles -----------------------\n")
         
         
         print("--- Search articles with 'toto' inside -----------------------")
         for article in articleManager.getArticles(containString: "toto") {
-            print(article.description)
+            print(article.description, "\n")
         }
         print("--- End print 'toto' articles -----------------------\n")
         
         
         print("--- Search articles in 'en' language -----------------------")
         for article in articleManager.getArticles(withLang: "en") {
-            print(article.description)
+            print(article.description, "\n")
         }
         print("--- End print 'en' articles -----------------------\n")
         
         
         print("--- Search articles in 'it' language -----------------------")
         for article in articleManager.getArticles(withLang: "it") {
-            print(article.description)
+            print(article.description, "\n")
         }
         print("--- End print 'it' articles -----------------------\n")
         

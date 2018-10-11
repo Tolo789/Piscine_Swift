@@ -1,6 +1,7 @@
 
 import CoreData
 
+@available(iOS 10.0, *)
 public class ArticleManager {
     public static let toto = 42
     
@@ -13,7 +14,7 @@ public class ArticleManager {
         
         // ----- Tutorial at https://www.andrewcbancroft.com/2017/04/16/creating-the-core-data-stack-with-backwards-compatibility-in-swift/ -----------
         // Initialize NSManagedObjectModel
-        let modelURL = myBundle.url(forResource: "article", withExtension: "momd")
+        let modelURL = myBundle.url(forResource: "articles", withExtension: "momd")
         guard let model = NSManagedObjectModel(contentsOf: modelURL!) else { fatalError("model not found") }
         
         // Configure NSPersistentStoreCoordinator with an NSPersistentStore
@@ -22,7 +23,7 @@ public class ArticleManager {
         let storeURL = try! FileManager
             .default
             .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("article.sqlite")
+            .appendingPathComponent("articles.sqlite")
         
         try! psc.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: storeURL, options: nil)
         
@@ -32,18 +33,18 @@ public class ArticleManager {
         // ----- End tutorail --------------------------
     }
     
-    public func newArticle(title: String, content: String, language: String, image: Data?) -> Article {
+    public func newArticle(title: String, content: String, language: String, image: NSData?) -> Article {
         var article : Article!
         context.performAndWait() {
-            let ent: NSEntityDescription = NSEntityDescription.entity(forEntityName: "Article", in: context)!
-            article = Article(entity: ent, insertInto: context)
+//            let ent: NSEntityDescription = NSEntityDescription.entity(forEntityName: "Article", in: context)!
+//            article = Article(entity: ent, insertInto: context)
+            article = Article(context: self.context)
             article.title = title
             article.content = content
             article.language = language
             article.image = image
-            article.create_date = Date()
+            article.create_date = NSDate()
             article.update_date = article.create_date
-            //            print("Article created:\n", article.description)
         }
         return article
     }
@@ -53,13 +54,16 @@ public class ArticleManager {
     }
     
     public func getAllArticles() -> [Article] {
-        var fetchedResult : [Article]
-        //        context.get
+        var fetchedResult = [Article]()
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Article")
         do {
-            fetchedResult = try context.fetch(fetchRequest) as! [Article]
+            if let tmpRes = try context.fetch(fetchRequest) as? [Article] {
+                fetchedResult = tmpRes
+            }
+            
         } catch {
-            fatalError("Failed to fetch employees: \(error)")
+            fatalError("Failed to fetch: \(error)")
         }
         return fetchedResult
     }
@@ -72,7 +76,7 @@ public class ArticleManager {
         do {
             fetchedResult = try context.fetch(fetchRequest) as! [Article]
         } catch {
-            fatalError("Failed to fetch employees: \(error)")
+            fatalError("Failed to fetch: \(error)")
         }
         
         return fetchedResult
@@ -86,7 +90,7 @@ public class ArticleManager {
         do {
             fetchedResult = try context.fetch(fetchRequest) as! [Article]
         } catch {
-            fatalError("Failed to fetch employees: \(error)")
+            fatalError("Failed to fetch: \(error)")
         }
         
         return fetchedResult
