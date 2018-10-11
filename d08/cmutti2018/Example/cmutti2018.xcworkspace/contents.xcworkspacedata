@@ -2,10 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../cmutti2018/Article+CoreDataClass.swift">
+      location = "group:../cmutti2018/Classes/Article+CoreDataClass.swift">
    </FileRef>
    <FileRef
-      location = "group:../cmutti2018/Article+CoreDataProperties.swift">
+      location = "group:../cmutti2018/Classes/Article+CoreDataProperties.swift">
    </FileRef>
    <FileRef
       location = "group:cmutti2018.xcodeproj">

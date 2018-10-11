@@ -1,8 +1,8 @@
 {
   "name": "cmutti2018",
   "version": "0.1.0",
-  "summary": "D08 piscine iOS",
-  "description": "'Looong description'",
+  "summary": "d08 piscine iOS",
+  "description": "Loong description",
   "homepage": "https://github.com/Tolo789/cmutti2018",
   "license": {
     "type": "MIT",
@@ -18,6 +18,7 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "cmutti2018/Classes/**/*",
-  "swift_version": "4.0.2"
+  "source_files": "cmutti2018/Classes/**/*.swift",
+  "resources": "cmutti2018/*.xcdatamodeld",
+  "swift_version": "4.0.3"
 }

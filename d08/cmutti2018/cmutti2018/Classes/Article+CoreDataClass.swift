@@ -12,8 +12,4 @@ import CoreData
 @objc(Article)
 public class Article: NSManagedObject {
 
-    
-    override public var description : String {
-        return "TOto"
-    }
 }
