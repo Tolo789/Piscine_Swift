@@ -1,8 +1,8 @@
 {
   "name": "cmutti2018",
   "version": "0.1.0",
-  "summary": "A short description of cmutti2018.",
-  "description": "TODO: Add long description of the pod here.",
+  "summary": "D08 piscine iOS",
+  "description": "'Looong description'",
   "homepage": "https://github.com/Tolo789/cmutti2018",
   "license": {
     "type": "MIT",
@@ -18,5 +18,6 @@
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "cmutti2018/Classes/**/*"
+  "source_files": "cmutti2018/Classes/**/*",
+  "swift_version": "4.0.2"
 }

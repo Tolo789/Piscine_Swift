@@ -43,7 +43,7 @@ public class ArticleManager {
             article.image = image
             article.create_date = Date()
             article.update_date = article.create_date
-//            print("Article created:\n", article.description)
+            //            print("Article created:\n", article.description)
         }
         return article
     }
@@ -54,7 +54,7 @@ public class ArticleManager {
     
     public func getAllArticles() -> [Article] {
         var fetchedResult : [Article]
-//        context.get
+        //        context.get
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Article")
         do {
             fetchedResult = try context.fetch(fetchRequest) as! [Article]

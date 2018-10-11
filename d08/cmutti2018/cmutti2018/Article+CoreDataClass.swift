@@ -2,7 +2,7 @@
 //  Article+CoreDataClass.swift
 //  
 //
-//  Created by Claudio MUTTI on 10/10/18.
+//  Created by Claudio MUTTI on 10/11/18.
 //
 //
 
@@ -13,13 +13,7 @@ import CoreData
 public class Article: NSManagedObject {
 
     
-    public var descriptionQ : String {
-        get {
-            "\"\(title)\" (Created at: \(create_date), language: \(language))\n\(content)\n\t(Last update: \(update_date))"
-        }
-    }
-    
-    public func toto() -> String {
-        return "toto"
+    override public var description : String {
+        return "TOto"
     }
 }

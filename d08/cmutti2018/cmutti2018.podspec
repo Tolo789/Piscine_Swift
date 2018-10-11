@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'cmutti2018'
   s.version          = '0.1.0'
-  s.summary          = 'd08 of piscine iOS'
+  s.summary          = 'D08 piscine iOS'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,7 +17,9 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = 'A loooooooong description of cmutti2018.'
+  s.description      = <<-DESC
+'Looong description'
+                       DESC
 
   s.homepage         = 'https://github.com/Tolo789/cmutti2018'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
@@ -30,13 +32,13 @@ Pod::Spec.new do |s|
 
   s.source_files = 'cmutti2018/Classes/**/*'
   
-  s.resource_bundles = {
-    'cmutti2018' => ['cmutti2018/*.xcdatamodeld']
-  }
+  # s.resource_bundles = {
+  #   'cmutti2018' => ['cmutti2018/Assets/*.png']
+  # }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'UIKit', 'CoreData'
+  # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
   
-  s.swift_version = '4.0.3'
+  s.swift_version = '4.0.2'
 end

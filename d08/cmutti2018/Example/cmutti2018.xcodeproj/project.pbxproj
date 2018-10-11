@@ -13,8 +13,8 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		DDAB3D03B8947491D2BDBDDE /* Pods_cmutti2018_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17F613A80DC2F8C8E96BEF63 /* Pods_cmutti2018_Tests.framework */; };
-		F87B3C95ADC93AE0CE84735B /* Pods_cmutti2018_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3EF69DA6266464FC7C557C9 /* Pods_cmutti2018_Example.framework */; };
+		BF2895C0B15F9CD0903A4EDA /* Pods_cmutti2018_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07DE6E58B24AA9E545C5327D /* Pods_cmutti2018_Tests.framework */; };
+		CA203DE323B33D403E0D06D5 /* Pods_cmutti2018_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 130ED07A175545A25114BA04 /* Pods_cmutti2018_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,11 +28,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		17F613A80DC2F8C8E96BEF63 /* Pods_cmutti2018_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cmutti2018_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		1AD464C2FA6BBD57ABFDCFC9 /* cmutti2018.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = cmutti2018.podspec; path = ../cmutti2018.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		33CBE3FDCCAFF9ACE82F1340 /* Pods-cmutti2018_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Tests/Pods-cmutti2018_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		563742FC5FED99DC88C2104E /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		57B2DF24662FB6DE58646BA9 /* Pods-cmutti2018_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Tests/Pods-cmutti2018_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		07DE6E58B24AA9E545C5327D /* Pods_cmutti2018_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cmutti2018_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		130ED07A175545A25114BA04 /* Pods_cmutti2018_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cmutti2018_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		31F37F3920077AEE96BF1DCE /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		41BA7BE5F71BB1C7B804F835 /* Pods-cmutti2018_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Tests/Pods-cmutti2018_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		49E6566200B67262FBAEBF70 /* Pods-cmutti2018_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Tests/Pods-cmutti2018_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		4F11C29FF9E5E82069968387 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* cmutti2018_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cmutti2018_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,10 +44,9 @@
 		607FACE51AFB9204008FA782 /* cmutti2018_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cmutti2018_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		A995B15BAFE94BBE04AC19A4 /* Pods-cmutti2018_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Example/Pods-cmutti2018_Example.debug.xcconfig"; sourceTree = "<group>"; };
-		B0E3E1DE643EE4369FE059E9 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		E3EF69DA6266464FC7C557C9 /* Pods_cmutti2018_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_cmutti2018_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F168EA2FD75673E6444192CB /* Pods-cmutti2018_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Example/Pods-cmutti2018_Example.release.xcconfig"; sourceTree = "<group>"; };
+		870F3C1ACB80B8772418300F /* Pods-cmutti2018_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Example/Pods-cmutti2018_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		DF7C032F84B553995BB2ED73 /* cmutti2018.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = cmutti2018.podspec; path = ../cmutti2018.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F1564781F88FD4F537B9FE56 /* Pods-cmutti2018_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-cmutti2018_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-cmutti2018_Example/Pods-cmutti2018_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F87B3C95ADC93AE0CE84735B /* Pods_cmutti2018_Example.framework in Frameworks */,
+				CA203DE323B33D403E0D06D5 /* Pods_cmutti2018_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,13 +62,22 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DDAB3D03B8947491D2BDBDDE /* Pods_cmutti2018_Tests.framework in Frameworks */,
+				BF2895C0B15F9CD0903A4EDA /* Pods_cmutti2018_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47BCD1183DAEA313C9365472 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				130ED07A175545A25114BA04 /* Pods_cmutti2018_Example.framework */,
+				07DE6E58B24AA9E545C5327D /* Pods_cmutti2018_Tests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -76,8 +85,8 @@
 				607FACD21AFB9204008FA782 /* Example for cmutti2018 */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				8EAF2A0E6101362A02B65792 /* Pods */,
-				DD296D443E94DD6716279A87 /* Frameworks */,
+				7B9D5CE3304D40262122629C /* Pods */,
+				47BCD1183DAEA313C9365472 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -132,31 +141,22 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				1AD464C2FA6BBD57ABFDCFC9 /* cmutti2018.podspec */,
-				B0E3E1DE643EE4369FE059E9 /* README.md */,
-				563742FC5FED99DC88C2104E /* LICENSE */,
+				DF7C032F84B553995BB2ED73 /* cmutti2018.podspec */,
+				4F11C29FF9E5E82069968387 /* README.md */,
+				31F37F3920077AEE96BF1DCE /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		8EAF2A0E6101362A02B65792 /* Pods */ = {
+		7B9D5CE3304D40262122629C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A995B15BAFE94BBE04AC19A4 /* Pods-cmutti2018_Example.debug.xcconfig */,
-				F168EA2FD75673E6444192CB /* Pods-cmutti2018_Example.release.xcconfig */,
-				33CBE3FDCCAFF9ACE82F1340 /* Pods-cmutti2018_Tests.debug.xcconfig */,
-				57B2DF24662FB6DE58646BA9 /* Pods-cmutti2018_Tests.release.xcconfig */,
+				870F3C1ACB80B8772418300F /* Pods-cmutti2018_Example.debug.xcconfig */,
+				F1564781F88FD4F537B9FE56 /* Pods-cmutti2018_Example.release.xcconfig */,
+				49E6566200B67262FBAEBF70 /* Pods-cmutti2018_Tests.debug.xcconfig */,
+				41BA7BE5F71BB1C7B804F835 /* Pods-cmutti2018_Tests.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		DD296D443E94DD6716279A87 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				E3EF69DA6266464FC7C557C9 /* Pods_cmutti2018_Example.framework */,
-				17F613A80DC2F8C8E96BEF63 /* Pods_cmutti2018_Tests.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,11 +166,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "cmutti2018_Example" */;
 			buildPhases = (
-				34EC6FC8C82008A4E25B624B /* [CP] Check Pods Manifest.lock */,
+				5B23CB6B8B494917320A0DDD /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				30A074D1F467E3E71901654A /* [CP] Embed Pods Frameworks */,
+				2E5C73BC132E03E010C695EE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -185,7 +185,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "cmutti2018_Tests" */;
 			buildPhases = (
-				394D967FADC5EBAA7868CF92 /* [CP] Check Pods Manifest.lock */,
+				AE4A4D70821ADDB1AE5AEF3A /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
@@ -261,7 +261,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		30A074D1F467E3E71901654A /* [CP] Embed Pods Frameworks */ = {
+		2E5C73BC132E03E010C695EE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -279,7 +279,7 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-cmutti2018_Example/Pods-cmutti2018_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		34EC6FC8C82008A4E25B624B /* [CP] Check Pods Manifest.lock */ = {
+		5B23CB6B8B494917320A0DDD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -297,7 +297,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		394D967FADC5EBAA7868CF92 /* [CP] Check Pods Manifest.lock */ = {
+		AE4A4D70821ADDB1AE5AEF3A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -466,7 +466,7 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A995B15BAFE94BBE04AC19A4 /* Pods-cmutti2018_Example.debug.xcconfig */;
+			baseConfigurationReference = 870F3C1ACB80B8772418300F /* Pods-cmutti2018_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = cmutti2018/Info.plist;
@@ -481,7 +481,7 @@
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F168EA2FD75673E6444192CB /* Pods-cmutti2018_Example.release.xcconfig */;
+			baseConfigurationReference = F1564781F88FD4F537B9FE56 /* Pods-cmutti2018_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = cmutti2018/Info.plist;
@@ -496,7 +496,7 @@
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 33CBE3FDCCAFF9ACE82F1340 /* Pods-cmutti2018_Tests.debug.xcconfig */;
+			baseConfigurationReference = 49E6566200B67262FBAEBF70 /* Pods-cmutti2018_Tests.debug.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -518,7 +518,7 @@
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57B2DF24662FB6DE58646BA9 /* Pods-cmutti2018_Tests.release.xcconfig */;
+			baseConfigurationReference = 41BA7BE5F71BB1C7B804F835 /* Pods-cmutti2018_Tests.release.xcconfig */;
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
