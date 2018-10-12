@@ -1,0 +1,6 @@
+framework module cmutti2018 {
+  umbrella header "cmutti2018-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,16 @@
+PODS:
+  - cmutti2018 (0.1.0)
+
+DEPENDENCIES:
+  - cmutti2018 (from `../cmutti2018`)
+
+EXTERNAL SOURCES:
+  cmutti2018:
+    :path: "../cmutti2018"
+
+SPEC CHECKSUMS:
+  cmutti2018: 102b6e6931a26a32c4110a4eaebfb305d0b86c6d
+
+PODFILE CHECKSUM: a2e911c760ec2f8f55c8d96c2426ded56c3967c4
+
+COCOAPODS: 1.5.3

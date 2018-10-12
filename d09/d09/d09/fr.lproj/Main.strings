@@ -1,0 +1,30 @@
+/* Class = "UILabel"; text = "Content"; ObjectID = "9Fr-Aa-JnU"; */
+"9Fr-Aa-JnU.text" = "Contenu";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "IEB-CK-LWu"; */
+"IEB-CK-LWu.text" = "Titre";
+
+/* Class = "UITextField"; placeholder = "Title"; ObjectID = "NHD-5p-OD9"; */
+"NHD-5p-OD9.placeholder" = "Titre";
+
+/* Class = "UINavigationItem"; title = "Article"; ObjectID = "TOw-iD-R6H"; */
+"TOw-iD-R6H.title" = "Article";
+
+/* Class = "UIButton"; normalTitle = "Open Gallery"; ObjectID = "diC-MD-NcD"; */
+"diC-MD-NcD.normalTitle" = "Ouvre Galerie";
+
+/* Class = "UIButton"; normalTitle = "Take Picture"; ObjectID = "fXK-Xv-Il3"; */
+"fXK-Xv-Il3.normalTitle" = "Prendre une Photo";
+
+/* Class = "UINavigationItem"; title = "Diary"; ObjectID = "ggt-Pe-Gwi"; */
+"ggt-Pe-Gwi.title" = "Journal";
+
+/* Class = "UILabel"; text = "UpdateDate"; ObjectID = "h2s-UV-hNZ"; */
+"h2s-UV-hNZ.text" = "UpdateDate";
+
+/* Class = "UILabel"; text = "CreateDate"; ObjectID = "juK-HR-VNh"; */
+"juK-HR-VNh.text" = "CreateDate";
+
+/* Class = "UINavigationItem"; title = "LogIn"; ObjectID = "qEV-sH-rUj"; */
+"qEV-sH-rUj.title" = "LogIn";
+
