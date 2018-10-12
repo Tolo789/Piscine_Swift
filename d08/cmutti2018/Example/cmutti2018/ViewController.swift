@@ -10,7 +10,6 @@ import UIKit
 import CoreData
 import cmutti2018
 
-@available(iOS 10.0, *)
 class ViewController: UIViewController {
     
     override func viewDidLoad() {

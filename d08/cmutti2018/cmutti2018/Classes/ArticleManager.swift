@@ -1,7 +1,6 @@
 
 import CoreData
 
-@available(iOS 10.0, *)
 public class ArticleManager {
     public static let toto = 42
     
@@ -36,9 +35,9 @@ public class ArticleManager {
     public func newArticle(title: String, content: String, language: String, image: NSData?) -> Article {
         var article : Article!
         context.performAndWait() {
-//            let ent: NSEntityDescription = NSEntityDescription.entity(forEntityName: "Article", in: context)!
-//            article = Article(entity: ent, insertInto: context)
-            article = Article(context: self.context)
+            let ent: NSEntityDescription = NSEntityDescription.entity(forEntityName: "Article", in: context)!
+            article = Article(entity: ent, insertInto: context)
+//            article = Article(context: self.context)
             article.title = title
             article.content = content
             article.language = language
