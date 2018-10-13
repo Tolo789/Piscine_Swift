@@ -103,6 +103,7 @@
                                             <outlet property="articleImageView" destination="dd7-MR-Tfm" id="GS8-9X-zEI"/>
                                             <outlet property="contentLabel" destination="9Fr-Aa-JnU" id="ei8-9v-wS1"/>
                                             <outlet property="createDateLabel" destination="juK-HR-VNh" id="uxE-GO-rZh"/>
+                                            <outlet property="heightConstraint" destination="3t0-Gi-GiF" id="tPh-w4-4by"/>
                                             <outlet property="titleLabel" destination="IEB-CK-LWu" id="DDt-3W-QOn"/>
                                             <outlet property="updateDateLabel" destination="h2s-UV-hNZ" id="ntm-Cp-Fa3"/>
                                         </connections>

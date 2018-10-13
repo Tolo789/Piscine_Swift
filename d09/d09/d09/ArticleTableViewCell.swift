@@ -17,6 +17,7 @@ class ArticleTableViewCell: UITableViewCell {
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var createDateLabel: UILabel!
     @IBOutlet weak var updateDateLabel: UILabel!
+    @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
     var article: Article? {
         didSet {
@@ -42,10 +43,13 @@ class ArticleTableViewCell: UITableViewCell {
             }
             
             if let imageData = article?.image as Data?, let myImage = UIImage(data: imageData) {
+                heightConstraint.constant = 246
                 articleImageView.image = myImage
             }
             else {
-                articleImageView.image = UIImage(named: "noImage")
+                heightConstraint.constant = 0
+                articleImageView.image = nil
+//                articleImageView.image = UIImage(named: "noImage")
             }
         }
     }
